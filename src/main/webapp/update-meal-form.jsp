@@ -5,7 +5,6 @@
     <title>Update Meal</title>
 
     <link type="text/css" rel="stylesheet" href="css/style.css">
-    <link type="text/css" rel="stylesheet" href="css/add-meal-style.css">
 </head>
 
 <body>

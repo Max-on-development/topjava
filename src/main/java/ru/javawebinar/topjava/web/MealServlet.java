@@ -26,31 +26,18 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // read the "command" parameter
             String theCommand = request.getParameter("command");
-
-            // if the command is missing, then default to listing students
             if (theCommand == null) {
                 theCommand = "LIST";
             }
-
-            // route to the appropriate method
             switch (theCommand) {
 
                 case "LIST":
                     listMeals(request, response);
                     break;
 
-                case "ADD":
-                    addMeal(request, response);
-                    break;
-
                 case "LOAD":
                     loadMeal(request, response);
-                    break;
-
-                case "UPDATE":
-                    updateMeal(request, response);
                     break;
 
                 case "DELETE":
@@ -73,7 +60,29 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        try {
+            String theCommand = request.getParameter("command");
+            if (theCommand == null) {
+                theCommand = "LIST";
+            }
+            switch (theCommand) {
+
+                case "ADD":
+                    addMeal(request, response);
+                    break;
+
+                case "UPDATE":
+                    updateMeal(request, response);
+                    break;
+
+                default:
+                    listMeals(request, response);
+            }
+
+        }
+        catch (Exception exc) {
+            throw new ServletException(exc);
+        }
     }
 
     private void deleteMeal(HttpServletRequest request, HttpServletResponse response)
@@ -91,7 +100,6 @@ public class MealServlet extends HttpServlet {
         int calories = Integer.parseInt(request.getParameter("calories"));
         dao.updateMeal(id, new Meal(date, description, calories));
         listMeals(request, response);
-
     }
 
     private void listMeals(HttpServletRequest request, HttpServletResponse response)

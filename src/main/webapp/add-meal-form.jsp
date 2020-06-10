@@ -18,7 +18,7 @@
 <div id="container">
     <h3>Add Meal</h3>
 
-    <form action="MealServlet" method="GET">
+    <form action="MealServlet" method="POST">
 
         <input type="hidden" name="command" value="ADD" />
 
