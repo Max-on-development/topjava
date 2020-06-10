@@ -30,13 +30,18 @@ public class MockMealDAO implements MealService {
                 new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
         );
 
-        meals.forEach(meal -> allMeals.put(AUTO_ID.getAndDecrement(), meal));
+        meals.forEach(meal -> {
+            int id = AUTO_ID.getAndIncrement();
+            meal.setId(id);
+            allMeals.put(id, meal);
+        });
     }
 
     @Override
     public List<MealTo> getMeals() {
         List<Meal> meals = new ArrayList<>(allMeals.values());
         List<MealTo> mealTo = MealsUtil.filteredByStreams(meals, LocalTime.of(0, 0), LocalTime.of(23, 59), 2000);
+
         return mealTo;
     }
 

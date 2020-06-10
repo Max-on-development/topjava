@@ -58,16 +58,14 @@
                 </tr>
 
                 <c:forEach var="mealTo" items="${meals_list}">
-                    <!-- set up a link for each student -->
                     <c:url var="tempLink" value="MealServlet">
                         <c:param name="command" value="LOAD" />
-                        <c:param name="mealId" value="${tempMeal.getId()}" />
+                        <c:param name="mealId" value="${mealTo.getId()}" />
                     </c:url>
 
-                    <!--  set up a link to delete a student -->
                     <c:url var="deleteLink" value="MealServlet">
                         <c:param name="command" value="DELETE" />
-                        <c:param name="mealId" value="${tempMeal.getId()}" />
+                        <c:param name="mealId" value="${mealTo.getId()}" />
                     </c:url>
                     <tr style="color:${mealTo.isExcess() ? 'rgba(201, 89, 89, 0.9)' : null}">
                         <td>
