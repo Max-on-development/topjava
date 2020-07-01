@@ -7,21 +7,21 @@ import org.junit.runner.Description;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //https://stackoverflow.com/questions/17552779/record-time-it-takes-junit-tests-to-run
 public class MyJUnitStopWatch extends Stopwatch {
 
-    public static List<String> resultList = new ArrayList<>();
+    private static Logger log = Logger.getLogger(MyJUnitStopWatch.class.getName());
 
-    public static Long totalTimeSpent = 0L;
+    public static List<String> resultList = new ArrayList<>();
 
     private static void logInfo(Description description, String status, long nanos) {
         String testName = description.getMethodName();
-        String s = String.format("Test %s %s, spent %d milliseconds",
-                testName, status, TimeUnit.NANOSECONDS.toMillis(nanos));
-        System.out.println(s);
+        String s = testName + " " +TimeUnit.NANOSECONDS.toMillis(nanos) + " milliseconds";
+        log.log(Level.INFO, s);
         resultList.add(s);
-        totalTimeSpent += nanos;
     }
 
     @Override

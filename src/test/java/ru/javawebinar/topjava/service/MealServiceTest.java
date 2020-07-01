@@ -14,7 +14,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -29,6 +29,8 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
+    private static Logger log = Logger.getLogger("");
+
     @Autowired
     private MealService service;
 
@@ -37,10 +39,11 @@ public class MealServiceTest {
 
     @AfterClass
     public static void printResults() {
-        MyJUnitStopWatch.resultList.forEach(s -> System.out.println(s));
-        String total = String.format("Total time spent for all tests - %d milliseconds",
-                TimeUnit.NANOSECONDS.toMillis(MyJUnitStopWatch.totalTimeSpent));
-        System.out.println(total);
+        StringBuilder s = new StringBuilder("");
+        MyJUnitStopWatch.resultList.forEach(str -> {
+            s.append(str.trim()).append("\n");
+        } );
+        log.info(s.toString());
     }
 
     @Test
