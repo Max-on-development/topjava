@@ -33,6 +33,12 @@ public class MealRestController {
         return service.get(id, userId);
     }
 
+    public Meal getWithUser(int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("get meal {} for user {}", id, userId);
+        return service.getWithUser(id, userId);
+    }
+
     public void delete(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("delete meal {} for user {}", id, userId);
