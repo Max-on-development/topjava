@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.TimingRules;
 
 import java.util.Arrays;
@@ -39,7 +40,7 @@ abstract public class AbstractServiceTest {
     private Environment environment;
 
     protected boolean isJdbc() {
-        return Arrays.stream(environment.getActiveProfiles()).filter((s)->s.length()>0).anyMatch("jdbc"::contains);
+        return Arrays.stream(environment.getActiveProfiles()).anyMatch(Profiles.JDBC::equals);
     }
 
     //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
