@@ -21,7 +21,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 public abstract class AbstractMealController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
+    @Autowired (required = false)
     ConversionService conversionService;
 
     @Autowired
