@@ -8,12 +8,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,7 +34,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEAL_MATCHER.contentJson(MEALS));
+                .andExpect(MEALTO_MATCHER.contentJson(MEALSTO));
     }
 
     @Test
@@ -68,22 +68,10 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getBetween() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "filter?startDateTime=" + LocalDateTime.of(2020, 01, 30, 14, 00) +
-                "&endDateTime=" + LocalDateTime.of(2020, 01, 31, 23, 00)))
+        perform(MockMvcRequestBuilders.get(REST_URL + "filter?startDate=2020-01-30&startTime=&endDate=2020-01-30&endTime="))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEAL_MATCHER.contentJson(MEAL7, MEAL3));
-    }
-
-    @Test
-    void getBetweenUpdated() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "filterWithNull?startDate=" + LocalDate.of(2020, 01, 30)
-                + "&startTime=" +
-                "&endDate=" + LocalDate.of(2020, 01, 30) +
-                "&endTime="))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEAL_MATCHER.contentJson(MEAL3, MEAL2, MEAL1));
+                .andExpect(MEALTO_MATCHER.contentJson(MealsUtil.getTos(List.of(MEAL3, MEAL2, MEAL1), MealsUtil.DEFAULT_CALORIES_PER_DAY)));
     }
 
     @Test
