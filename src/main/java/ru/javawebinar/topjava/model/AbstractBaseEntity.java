@@ -4,8 +4,6 @@ import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.util.Assert;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -35,6 +33,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -45,6 +44,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
         return id;
     }
 
+    @Override
     public boolean isNew() {
         return this.id == null;
     }
